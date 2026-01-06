@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+include CITATION.cff
+include requirements.txt
+recursive-include assets *
+recursive-include examples *.py *.ipynb
