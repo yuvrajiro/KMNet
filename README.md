@@ -43,7 +43,7 @@
 ## 🎯 Use Cases & Applications
 
 <table>
-<tr>
+<tr align="center">
 <td width="33%" align="center">
 
 ### 🏥 **Clinical Research**
@@ -233,7 +233,7 @@ $$
 The loss function $\mathcal{L}$ is a weighted sum of two components:
 
 $$
-\boxed{\mathcal{L} = \alpha \mathcal{L}_{NLL} + (1 - \alpha)\lambda \mathcal{L}_{Rank}}
+\boxed{\mathcal{L} = \alpha \mathcal{L}_{bce} + (1 - \alpha)\lambda \mathcal{L}_{Rank}}
 $$
 
 <details>
@@ -241,7 +241,7 @@ $$
 
 ### Loss Components
 
-1.  **$\mathcal{L}_{NLL}$ (Negative Log-Likelihood)**: 
+1.  **$\mathcal{L}_{bce}$ (Negative Log-Likelihood)**: 
     - Standard survival loss for discrete time
     - Ensures the model fits the observed event times
     - Handles censored data correctly
