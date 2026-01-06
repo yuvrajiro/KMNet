@@ -39,11 +39,44 @@
   </a>
 </p>
 
+
+## 🎯 Use Cases & Applications
+
+<table>
+<tr>
+<td width="33%" align="center">
+
+### 🏥 **Clinical Research**
+Patient survival analysis<br>
+Treatment effect estimation<br>
+Risk stratification
+
+</td>
+<td width="33%" align="center">
+
+### 🔧 **Reliability Engineering**
+Equipment failure prediction<br>
+Maintenance scheduling<br>
+Warranty analysis
+
+</td>
+<td width="33%" align="center">
+
+### 📊 **Business Analytics**
+Customer churn prediction<br>
+Subscription lifetime value<br>
+Employee retention
+
+</td>
+</tr>
+</table>
+
+
 <p align="center">
   <strong>KMNet</strong> combines the power of deep neural networks with Kaplan-Meier inspired ranking losses to deliver state-of-the-art performance in discrete-time survival analysis. Perfect for clinical research, reliability engineering, and time-to-event prediction.
 </p>
 
---- It extends standard neural survival models by incorporating a novel **Kaplan-Meier inspired rank loss**, allowing the model to learn not just from local hazard rates but also from global ranking constraints inherent in survival data.
+It extends standard neural survival models by incorporating a novel **Kaplan-Meier inspired rank loss**, allowing the model to learn not just from local hazard rates but also from global ranking constraints inherent in survival data.
 
 This library provides a high-performance implementation using **PyTorch JIT** to speed up custom loss calculations, making it suitable for large-scale survival datasets.
 
@@ -156,7 +189,7 @@ net = nn.Sequential(
 
 ### 3. Train the Model
 
-Initialize `KMNetOptimized` and fit it to the data.
+Initialize `KMNet` and fit it to the data.
 
 ```python
 # Initialize model with the discretized time grid
@@ -188,34 +221,19 @@ plt.title("Predicted Survival Curves")
 plt.show()
 ```
 
-## 🏗️ Architecture & Workflow
-
-```mermaid
-graph LR
-    A[Input Features X] --> B[Neural Network]
-    B --> C[Logits φ]
-    C --> D[Survival Probabilities S(t)]
-    C --> E[Loss Computation]
-    E --> F[NLL Loss]
-    E --> G[Rank Loss]
-    F --> H[Combined Loss]
-    G --> H
-    H --> I[Backpropagation]
-    I --> B
-```
 
 ## 🔬 Mathematical Background
 
-KMNet models the discrete hazard function $h(t | x)$. The survival function is given by:
+KMNet models the discrete conditional survival $p(t | x)$. The survival function is given by:
 
 $$
-\boxed{S(t | x) = \prod_{k=0}^{t} (1 - h(k | x))}
+\boxed{S(t | x) = \prod_{k=0}^{t} p(k | x)}
 $$
 
 The loss function $\mathcal{L}$ is a weighted sum of two components:
 
 $$
-\boxed{\mathcal{L} = \alpha \mathcal{L}_{NLL} + (1 - \alpha) \mathcal{L}_{Rank}}
+\boxed{\mathcal{L} = \alpha \mathcal{L}_{NLL} + (1 - \alpha)\lambda \mathcal{L}_{Rank}}
 $$
 
 <details>
@@ -275,54 +293,17 @@ The `KMNet` class leverages **TorchScript (JIT)** to compile the custom loss fun
 </tr>
 </table>
 
-### 🎯 Model Performance
 
-KMNet achieves **state-of-the-art C-index** on standard benchmarks:
-
-| Dataset | KMNet | DeepSurv | Cox-PH |
-|---------|-------|----------|--------|
-| SUPPORT | **0.621** | 0.608 | 0.596 |
-| METABRIC | **0.659** | 0.643 | 0.638 |
-| GBSG | **0.672** | 0.664 | 0.651 |
-
-> *Your specific results may vary. See [examples/](examples/) for reproduction scripts.*
-
-## 🎯 Use Cases & Applications
-
-<table>
-<tr>
-<td width="33%" align="center">
-
-### 🏥 **Clinical Research**
-Patient survival analysis<br>
-Treatment effect estimation<br>
-Risk stratification
-
-</td>
-<td width="33%" align="center">
-
-### 🔧 **Reliability Engineering**
-Equipment failure prediction<br>
-Maintenance scheduling<br>
-Warranty analysis
-
-</td>
-<td width="33%" align="center">
-
-### 📊 **Business Analytics**
-Customer churn prediction<br>
-Subscription lifetime value<br>
-Employee retention
-
-</td>
-</tr>
-</table>
 
 ---
 
 ## 🛠️ Advanced Configuration
 
 You can customize the loss function parameters when initializing the model:
+
+1. `base`: 'nll' (Negative Log-Likelihood) or 'bce' (Binary Cross-Entropy)
+2. `rank_mode`: 'full' (CDF-based) or 'conditional' ranking
+3. `rank_penalty`: 'softplus' or 'exp' for the ranking loss formulation
 
 ```python
 from kmnet.model import KMLoss
@@ -370,7 +351,7 @@ We welcome contributions! KMNet is an open-source research project.
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## 📚 Citation
+## 📚 Citation (Under Consideration)
 
 **If you use KMNet in your research, please cite:**
 

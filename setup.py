@@ -7,13 +7,13 @@ setup(
     name="kmnet",
     version="0.1.0",
     author="Yuvraj",
-    author_email="yuvraj@example.com",
+    author_email="yuvraj@gmail.com",
     description="A discrete-time survival analysis model with Kaplan-Meier inspired loss.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/KMNet",
+    url="https://github.com/yuvrajiro/KMNet",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/KMNet/issues",
+        "Bug Tracker": "https://github.com/yuvrajiro/KMNet/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
