@@ -16,11 +16,11 @@
 
 <!-- CI/CD & Coverage -->
 <p align="center">
-  <a href="https://github.com/yourusername/KMNet/actions/workflows/test.yml">
-    <img src="https://github.com/yourusername/KMNet/actions/workflows/test.yml/badge.svg" alt="Tests">
+  <a href="https://github.com/yuvrajiro/KMNet/actions/workflows/test.yml">
+    <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/test.yml/badge.svg" alt="Tests">
   </a>
-  <a href="https://codecov.io/gh/yourusername/KMNet">
-    <img src="https://codecov.io/gh/yourusername/KMNet/branch/main/graph/badge.svg" alt="Coverage">
+  <a href="https://codecov.io/gh/yuvrajiro/KMNet">
+    <img src="https://codecov.io/gh/yuvrajiro/KMNet/branch/main/graph/badge.svg" alt="Coverage">
   </a>
   <a href="https://pypi.org/project/kmnet/">
     <img src="https://img.shields.io/pypi/v/kmnet" alt="PyPI">
@@ -121,7 +121,7 @@ This library provides a high-performance implementation using **PyTorch JIT** to
 You can install KMNet directly from the source:
 
 ```bash
-git clone https://github.com/yourusername/KMNet.git
+git clone https://github.com/yuvrajiro/KMNet.git
 cd KMNet
 pip install .
 ```
@@ -322,8 +322,8 @@ model = KMNet(net, loss=loss, duration_index=labtrans.cuts)
 ## 💬 Getting Help
 
 - 📖 **Documentation**: Check out our [examples](examples/) and [API docs](docs/)
-- 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yourusername/KMNet/issues)
-- 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yourusername/KMNet/discussions)
+- 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yuvrajiro/KMNet/issues)
+- 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yuvrajiro/KMNet/discussions)
 - 📧 **Email**: For collaboration inquiries: your.email@example.com
 
 ## 🤝 Contributing
@@ -361,7 +361,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
   author={YourLastName, Yuvraj},
   journal={Journal Name (Under Review)},
   year={2025},
-  url={https://github.com/yourusername/KMNet}
+  url={https://github.com/yuvrajiro/KMNet}
 }
 ```
 
