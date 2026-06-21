@@ -324,7 +324,7 @@ model = KMNet(net, loss=loss, duration_index=labtrans.cuts)
 - 📖 **Documentation**: Check out our [examples](examples/) and [API docs](docs/)
 - 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yuvrajiro/KMNet/issues)
 - 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yuvrajiro/KMNet/discussions)
-- 📧 **Email**: For collaboration inquiries: your.email@example.com
+- 📧 **Email**: For collaboration inquiries: yuvrajiro@gmail.com
 
 ## 🤝 Contributing
 
