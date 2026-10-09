@@ -39,10 +39,10 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/yuvrajiro/KMNet"
-Documentation = "https://yuvrajiro.github.io/KMNet/"
+Documentation = "https://kmnet.statml.in/"
 Repository = "https://github.com/yuvrajiro/KMNet"
 Issues = "https://github.com/yuvrajiro/KMNet/issues"
-Changelog = "https://yuvrajiro.github.io/KMNet/changelog.html"
+Changelog = "https://kmnet.statml.in/changelog.html"
 
 [project.optional-dependencies]
 dev = ["pytest>=7", "pytest-cov"]

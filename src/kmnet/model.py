@@ -311,8 +311,9 @@ class KMLoss(_KMLoss):
         ``max(0.25 * std(phi[i, j_i]), 1e-3)`` for each batch.
     reduction : {'mean', 'sum', 'none'}, default 'mean'
         How per-sample losses are reduced.
-    base : {'nll', 'bce'}, default 'nll'
+    base : {'nll', 'bce'}
         Likelihood form: negative log-likelihood or masked binary cross-entropy.
+        Required, there is no default: pick the form that suits your data.
     rank_mode : {'full', 'conditional'}, default 'full'
         ``'full'`` compares CDFs at the earlier event time; ``'conditional'``
         compares the conditional survival scores in that bin.
@@ -329,7 +330,7 @@ class KMLoss(_KMLoss):
         alpha: float = 0.5,
         sigma: float = 0.1,
         reduction: str = 'mean',
-        base: str = 'nll',              # 'nll' or 'bce'
+        base: str = None,               # 'nll' or 'bce' (required)
         rank_mode: str = 'full',        # 'full' or 'conditional'
         rank_space: str = 'logit',      # used if rank_mode='conditional': 'logit' or 'prob'
         rank_penalty: str = 'softplus', # 'softplus' or 'exp'
@@ -337,7 +338,9 @@ class KMLoss(_KMLoss):
     ) -> None:
         super().__init__(alpha=alpha, sigma=sigma, reduction=reduction)
         if base not in ('nll', 'bce'):
-            raise ValueError("base must be 'nll' or 'bce'")
+            raise ValueError(
+                f"`base` must be chosen explicitly: 'nll' or 'bce'. Got {base!r}."
+            )
         self.base = base
         self.rank_mode = rank_mode
         self.rank_space = rank_space
@@ -396,7 +399,10 @@ class KMNet(SurvBase):
     duration_index : array-like, optional
         Time grid of the bins (``labtrans.cuts``); used as the index of
         :meth:`predict_surv_df`.
-    alpha, sigma, base, rank_mode, rank_space, rank_penalty, rank_weight
+    base : {'nll', 'bce'}
+        Likelihood form passed to :class:`KMLoss`. Required unless ``loss``
+        is given; there is no default.
+    alpha, sigma, rank_mode, rank_space, rank_penalty, rank_weight
         Passed to :class:`KMLoss` when ``loss`` is not given.
     loss : KMLoss, optional
         A pre-built loss; overrides the loss arguments above.
@@ -405,7 +411,7 @@ class KMNet(SurvBase):
     --------
     >>> labtrans = KMNet.label_transform(20)
     >>> y = labtrans.fit_transform(time, event)
-    >>> model = KMNet(net, duration_index=labtrans.cuts)
+    >>> model = KMNet(net, duration_index=labtrans.cuts, base='nll')
     >>> model.fit(X, y, batch_size=64, epochs=20)
     >>> surv = model.predict_surv_df(X_test)
     """
@@ -419,7 +425,7 @@ class KMNet(SurvBase):
         sigma: float = 0.1,
         loss=None,
         # extra knobs for KMLoss
-        base: str = 'nll',              # 'nll' or 'bce'
+        base: str = None,               # 'nll' or 'bce' (required unless `loss` is given)
         rank_mode: str = 'full',        # 'full' or 'conditional'
         rank_space: str = 'logit',      # only used if rank_mode='conditional'
         rank_penalty: str = 'softplus', # 'softplus' or 'exp'

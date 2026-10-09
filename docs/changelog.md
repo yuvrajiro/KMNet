@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- **Breaking:** `base` no longer defaults to `"nll"`. Pass `base="nll"` or `base="bce"`
+  to `KMNet` (or `KMLoss`) explicitly; omitting it raises a `ValueError`.
+- Documentation restyled with a quieter, minimal look and moved to
+  [kmnet.statml.in](https://kmnet.statml.in/).
+- Citation updated to the TMLR submission.
+
 ## 0.2.0
 
 - New documentation site: quickstart, method, loss-configuration guide, tutorial notebook and a

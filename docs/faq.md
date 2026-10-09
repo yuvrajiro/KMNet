@@ -33,10 +33,10 @@ Yes! KMNet accepts any PyTorch `nn.Module` as the base network. Just ensure the 
 - **Recommendation**: Start with 10-50 bins, validate on holdout set
 
 ### What's the difference between 'nll' and 'bce' base loss?
-- `nll`: Negative log-likelihood (default, generally more stable)
+- `nll`: Negative log-likelihood
 - `bce`: Binary cross-entropy (alternative formulation, may work better in some cases)
 
-Both are mathematically equivalent for discrete survival analysis.
+Both are mathematically equivalent for discrete survival analysis. KMNet has no default here: pass `base="nll"` or `base="bce"` explicitly.
 
 ## Installation & Setup
 
@@ -49,7 +49,7 @@ pip install torch pandas numpy torchtuples pycox numba
 ### Can I use KMNet with GPU?
 Yes! Simply pass `device='cuda'` when initializing the model:
 ```python
-model = KMNet(net, device='cuda')
+model = KMNet(net, base='nll', device='cuda')
 ```
 
 ## Performance

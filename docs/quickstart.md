@@ -65,6 +65,7 @@ model = KMNet(
     net,
     optimizer=tt.optim.Adam(1e-3),
     duration_index=labtrans.cuts,
+    base="nll",     # likelihood form: "nll" or "bce" (required, no default)
     alpha=0.2,      # weight on the likelihood; 1 - alpha goes to the rank loss
     sigma=0.1,      # softness of the pairwise ranking penalty
 )

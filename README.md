@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://yuvrajiro.github.io/KMNet/"><b>Documentation</b></a> •
+  <a href="https://kmnet.statml.in/"><b>Documentation</b></a> •
   <a href="#-key-features">Features</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-quick-start">Quick Start</a> •
@@ -22,7 +22,7 @@
   <a href="https://github.com/yuvrajiro/KMNet/actions/workflows/tests.yml">
     <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/tests.yml/badge.svg" alt="Tests">
   </a>
-  <a href="https://yuvrajiro.github.io/KMNet/">
+  <a href="https://kmnet.statml.in/">
     <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/docs.yml/badge.svg" alt="Docs">
   </a>
   <a href="https://codecov.io/gh/yuvrajiro/KMNet">
@@ -147,7 +147,7 @@ pip install -e ".[dev]"
 
 ## ⚡ Quick Start
 
-Here is a complete example of how to use KMNet on a synthetic dataset. You can also check out the [interactive demo notebook](https://github.com/yuvrajiro/KMNet/blob/main/examples/KMNet_Demo.ipynb) and the [full documentation](https://yuvrajiro.github.io/KMNet/).
+Here is a complete example of how to use KMNet on a synthetic dataset. You can also check out the [interactive demo notebook](https://github.com/yuvrajiro/KMNet/blob/main/examples/KMNet_Demo.ipynb) and the [full documentation](https://kmnet.statml.in/).
 
 ### 1. Data Preparation
 
@@ -203,7 +203,7 @@ Initialize `KMNet` and fit it to the data.
 
 ```python
 # Initialize model with the discretized time grid
-model = KMNet(net, duration_index=labtrans.cuts)
+model = KMNet(net, duration_index=labtrans.cuts, base='nll')  # or base='bce'
 
 # Train
 batch_size = 64
@@ -311,7 +311,7 @@ The `KMNet` class leverages **TorchScript (JIT)** to compile the custom loss fun
 
 You can customize the loss function parameters when initializing the model:
 
-1. `base`: 'nll' (Negative Log-Likelihood) or 'bce' (Binary Cross-Entropy)
+1. `base` (required, no default): 'nll' (Negative Log-Likelihood) or 'bce' (Binary Cross-Entropy)
 2. `rank_mode`: 'full' (CDF-based) or 'conditional' ranking
 3. `rank_penalty`: 'softplus' or 'exp' for the ranking loss formulation
 
@@ -321,7 +321,7 @@ from kmnet.model import KMLoss
 loss = KMLoss(
     alpha=0.5,          # Weight for NLL vs Rank loss
     sigma=0.1,          # Kernel width for soft ranking
-    base='nll',         # 'nll' or 'bce'
+    base='nll',         # 'nll' or 'bce' (required)
     rank_mode='full',   # 'full' (CDF-based) or 'conditional'
     rank_penalty='softplus' # 'softplus' or 'exp'
 )
@@ -331,7 +331,7 @@ model = KMNet(net, loss=loss, duration_index=labtrans.cuts)
 
 ## 💬 Getting Help
 
-- 📖 **Documentation**: [yuvrajiro.github.io/KMNet](https://yuvrajiro.github.io/KMNet/) (quickstart, method, API reference)
+- 📖 **Documentation**: [kmnet.statml.in](https://kmnet.statml.in/) (quickstart, method, API reference)
 - 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yuvrajiro/KMNet/issues)
 - 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yuvrajiro/KMNet/discussions)
 - 📧 **Email**: For collaboration inquiries: yuvrajiro@gmail.com
@@ -361,16 +361,18 @@ We welcome contributions! KMNet is an open-source research project.
 
 Distributed under the MIT License. See [`LICENSE`](https://github.com/yuvrajiro/KMNet/blob/main/LICENSE) for more information.
 
-## 📚 Citation (Under Consideration)
+## 📚 Citation
 
-**The paper is under review. Until it is published, please cite the software:**
+KMNet accompanies a paper under review at TMLR ([OpenReview](https://openreview.net/forum?id=VXIk9iY10Q)). If you use KMNet in your research, please cite:
 
 ```bibtex
-@software{goswami_kmnet,
-  title  = {KMNet: Discrete-Time Survival Analysis with a Kaplan-Meier Inspired Rank Loss},
-  author = {Goswami, Rahul},
-  url    = {https://github.com/yuvrajiro/KMNet},
-  year   = {2025}
+@article{anonymous2026deep,
+  title   = {Deep Discrete-Time Survival Analysis with Guaranteed Monotonicity},
+  author  = {Anonymous},
+  journal = {Submitted to Transactions on Machine Learning Research},
+  year    = {2026},
+  url     = {https://openreview.net/forum?id=VXIk9iY10Q},
+  note    = {Under review}
 }
 ```
 

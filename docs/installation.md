@@ -52,7 +52,7 @@ print(kmnet.__version__)
 KMNet runs wherever your network runs. Pass `device="cuda"` when constructing the model:
 
 ```python
-model = KMNet(net, duration_index=labtrans.cuts, device="cuda")
+model = KMNet(net, duration_index=labtrans.cuts, base="nll", device="cuda")
 ```
 
 ## Building these docs

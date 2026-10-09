@@ -21,7 +21,7 @@ class TestKMNet(unittest.TestCase):
         
     def test_loss_forward(self):
         # Test that the loss function runs and returns a scalar
-        loss_fn = KMLoss(alpha=0.5, sigma=0.1)
+        loss_fn = KMLoss(alpha=0.5, sigma=0.1, base='nll')
         loss = loss_fn(self.phi, self.idx_durations, self.events, self.rank_mat)
         
         self.assertTrue(torch.is_tensor(loss))
@@ -33,7 +33,7 @@ class TestKMNet(unittest.TestCase):
         net = torch.nn.Linear(self.input_dim, self.time_bins)
         
         # Instantiate model
-        model = KMNet(net, loss=KMLoss())
+        model = KMNet(net, loss=KMLoss(base='bce'))
         
         # Test prediction
         input_data = torch.randn(self.batch_size, self.input_dim)
@@ -53,7 +53,7 @@ class TestKMNet(unittest.TestCase):
         y = labtrans.fit_transform(time, event)
         net = torch.nn.Linear(self.input_dim, labtrans.out_features)
 
-        for kwargs in ({}, {'rank_mode': 'conditional', 'sigma': 'auto', 'base': 'bce'}):
+        for kwargs in ({'base': 'nll'}, {'rank_mode': 'conditional', 'sigma': 'auto', 'base': 'bce'}):
             model = KMNet(net, duration_index=labtrans.cuts, **kwargs)
             log = model.fit(X, y, batch_size=32, epochs=2, verbose=False)
             self.assertTrue(np.isfinite(log.to_pandas()['train_loss']).all())
@@ -63,6 +63,14 @@ class TestKMNet(unittest.TestCase):
         self.assertTrue(((surv.values >= 0) & (surv.values <= 1)).all())
         # survival curves are non-increasing in time
         self.assertTrue((np.diff(surv.values, axis=0) <= 1e-7).all())
+
+
+    def test_base_has_no_default(self):
+        net = torch.nn.Linear(self.input_dim, self.time_bins)
+        with self.assertRaises(ValueError):
+            KMNet(net)
+        with self.assertRaises(ValueError):
+            KMLoss()
 
 
 if __name__ == '__main__':

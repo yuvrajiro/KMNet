@@ -1,18 +1,22 @@
 # Citation
 
-The KMNet paper is currently under review. Until it is published, please cite the software:
+KMNet accompanies a paper currently under review at TMLR. If KMNet helps your research,
+please cite:
 
 ```bibtex
-@software{goswami_kmnet,
-  title  = {KMNet: Discrete-Time Survival Analysis with a Kaplan-Meier Inspired Rank Loss},
-  author = {Goswami, Rahul},
-  url    = {https://github.com/yuvrajiro/KMNet},
-  year   = {2025}
+@article{anonymous2026deep,
+  title   = {Deep Discrete-Time Survival Analysis with Guaranteed Monotonicity},
+  author  = {Anonymous},
+  journal = {Submitted to Transactions on Machine Learning Research},
+  year    = {2026},
+  url     = {https://openreview.net/forum?id=VXIk9iY10Q},
+  note    = {Under review}
 }
 ```
 
-The repository includes a machine-readable `CITATION.cff`, so GitHub's
-**Cite this repository** button gives the same reference.
+The paper is on [OpenReview](https://openreview.net/forum?id=VXIk9iY10Q). The repository
+also includes a machine-readable `CITATION.cff`, which powers GitHub's
+**Cite this repository** button.
 
 ## Acknowledgements
 

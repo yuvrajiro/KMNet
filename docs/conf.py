@@ -61,8 +61,13 @@ copybutton_prompt_is_regexp = True
 # -- HTML output (pydata-sphinx-theme) ---------------------------------------
 html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
-html_css_files = ["custom.css"]
-html_js_files = [("reveal.js", {"defer": "defer"})]
+html_css_files = [
+    "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap",
+    "custom.css",
+]
+# Served at the site root: the CNAME file for the custom domain.
+html_extra_path = ["_extra"]
+html_baseurl = "https://kmnet.statml.in/"
 html_title = "KMNet"
 html_favicon = "_static/logo.svg"
 html_show_sourcelink = False

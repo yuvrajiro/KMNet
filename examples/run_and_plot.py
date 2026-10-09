@@ -42,7 +42,7 @@ def main():
     )
     
     # 4. Train Model
-    model = KMNet(net, duration_index=labtrans.cuts)
+    model = KMNet(net, duration_index=labtrans.cuts, base='nll')
     batch_size = 64
     epochs = 10
     
