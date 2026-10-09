@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
 authors = [{ name = "Rahul Goswami" }]
-maintainers = [{ name = "Rahul Goswami", email = "rahul.goswami@iitg.ac.in" }]
+maintainers = [{ name = "Rahul Goswami", email = "rahul@statml.in" }]
 keywords = [
     "survival analysis", "time-to-event", "discrete-time", "kaplan-meier",
     "rank loss", "deep learning", "pytorch", "censoring",

@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: "Goswami"
     given-names: "Rahul"
-    email: "rahul.goswami@iitg.ac.in"
+    email: "rahul@statml.in"
 version: 0.3.0
 date-released: 2026-10-09
 license: MIT

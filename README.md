@@ -334,7 +334,7 @@ model = KMNet(net, loss=loss, duration_index=labtrans.cuts)
 - 📖 **Documentation**: [kmnet.statml.in](https://kmnet.statml.in/) (quickstart, method, API reference)
 - 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yuvrajiro/KMNet/issues)
 - 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yuvrajiro/KMNet/discussions)
-- 📧 **Email**: For collaboration inquiries: yuvrajiro@gmail.com
+- 📧 **Email**: For collaboration inquiries: [rahul@statml.in](mailto:rahul@statml.in)
 
 ## 🤝 Contributing
 
