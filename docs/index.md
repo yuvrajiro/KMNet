@@ -1,59 +1,62 @@
----
-html_theme.sidebar_secondary.remove: true
----
-
 # KMNet
 
 <div class="km-hero">
-<div class="km-hero-text">
-<p class="km-eyebrow">DISCRETE-TIME SURVIVAL ANALYSIS · PYTORCH</p>
-<p class="km-title">Survival models that fit the data and rank it correctly.</p>
-<p class="km-lede">KMNet trains any PyTorch network on a censored likelihood plus a
+<p class="km-eyebrow"><span class="km-pill">v0.3.0</span> Deep discrete-time survival analysis · TMLR 2026 (under review)</p>
+<p class="km-headline">Survival models that fit the data,<br><em>and rank it correctly.</em></p>
+<p class="km-lead">KMNet trains any PyTorch network on a censored likelihood plus a
 Kaplan&ndash;Meier inspired rank loss. You choose the likelihood form; KMNet supplies the
 loss, the training loop and the survival curves.</p>
-<div class="km-cta">
-  <a class="km-btn km-btn-primary" href="quickstart.html">Get started</a>
-  <a class="km-btn km-btn-ghost" href="method.html">How it works</a>
+<div class="km-actions">
+  <a class="km-btn km-btn-solid" href="quickstart.html">Get started</a>
+  <a class="km-btn km-btn-outline" href="method.html">How it works</a>
+  <code class="km-install"><span>$</span>pip install kmnet</code>
 </div>
-<code class="km-install">pip install kmnet</code>
-</div>
-<figure class="km-hero-figure">
-<svg class="km-plot" viewBox="0 0 480 300" role="img" aria-label="Three Kaplan-Meier survival curves; the high-risk curve is highlighted">
-  <path class="axis" d="M40 20 V260 H470"/>
-  <path class="c-muted draw" pathLength="1" d="M40 30 H80 V48 H140 V62 H200 V80 H270 V96 H340 V118 H410 V132 H470"/>
-  <path class="c-muted draw d2" pathLength="1" d="M40 30 H70 V60 H120 V92 H180 V124 H240 V150 H310 V176 H380 V196 H470"/>
-  <path class="c-accent draw d3" pathLength="1" d="M40 30 H56 V78 H96 V124 H140 V166 H190 V200 H250 V226 H330 V242 H470"/>
-  <path class="tick" d="M120 54 V66 M300 90 V102 M222 118 V130 M280 220 V232"/>
-  <text x="44" y="16">S(t | x)</text>
-  <text x="470" y="282" text-anchor="end">time t</text>
-</svg>
-<figcaption>Predicted survival for three subjects. Ticks mark censored observations.</figcaption>
-</figure>
 </div>
 
-## Why KMNet
+<div class="km-features">
+<div class="km-card">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4v16h18"/><path d="M5 6h4v4h4v4h4v3h3"/></svg>
+<h3>Censoring-aware likelihood</h3>
+<p>Choose the NLL or masked BCE form; censored subjects count for exactly as long as they were observed.</p>
+</div>
+<div class="km-card">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h4V12H4z"/><path d="M10 18h4V8h-4z"/><path d="M16 18h4V4h-4z"/></svg>
+<h3>Ranking, not just fitting</h3>
+<p>A smooth pairwise penalty makes the subject who failed first look riskier at that time.</p>
+</div>
+<div class="km-card">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5"/><path d="M16 7l5 5-5 5"/><path d="M13.5 5l-3 14"/></svg>
+<h3>Drop-in PyTorch</h3>
+<p>Bring any <code>nn.Module</code>; TorchScript loss kernels behind the familiar pycox API.</p>
+</div>
+</div>
 
-::::{grid} 1 1 3 3
-:gutter: 3
+## How it works
 
-:::{grid-item-card} Likelihood that respects censoring
-Choose the negative log-likelihood or the masked BCE form. Censored subjects count for
-exactly as long as they were observed.
-:::
+<div class="km-steps">
+<div class="km-step">
+<span class="km-step-num">01</span>
+<h3>Discretise time</h3>
+<p>Cut follow-up into T bins with <code>KMNet.label_transform</code>.</p>
+</div>
+<div class="km-step">
+<span class="km-step-num">02</span>
+<h3>Bring a network</h3>
+<p>Any <code>nn.Module</code> with T outputs gives one logit per bin.</p>
+</div>
+<div class="km-step">
+<span class="km-step-num">03</span>
+<h3>Choose the loss</h3>
+<p><code>base="nll"</code> or <code>"bce"</code>, weighted against the rank term.</p>
+</div>
+<div class="km-step">
+<span class="km-step-num">04</span>
+<h3>Predict curves</h3>
+<p>S(t | x) is the running product of the per-bin survival.</p>
+</div>
+</div>
 
-:::{grid-item-card} Ranking, not just fitting
-A smooth pairwise penalty makes the subject who failed first look riskier at that time,
-which targets concordance directly.
-:::
-
-:::{grid-item-card} Drop-in and fast
-TorchScript-compiled loss kernels and a Numba pair matrix, behind the familiar `pycox` /
-`torchtuples` API.
-:::
-
-::::
-
-## Thirty-second example
+## Quick start
 
 ```python
 import torch.nn as nn
@@ -74,45 +77,37 @@ model.fit(X, y, batch_size=64, epochs=20)
 surv = model.predict_surv_df(X[:5])             # rows: time grid, cols: subjects
 ```
 
-## Where to next
+## What you get
 
-::::{grid} 1 2 2 2
-:gutter: 3
+<figure class="km-figure">
+<svg class="km-plot" viewBox="0 0 640 300" role="img" aria-label="Schematic of three predicted survival curves, low, medium and high risk, with a dashed population Kaplan-Meier reference curve">
+  <path class="axis" d="M50 20 V250 H620"/>
+  <path class="ref" d="M50 30 C 180 70, 330 150, 620 186"/>
+  <path class="l1" d="M50 30 H100 V46 H170 V60 H240 V76 H320 V92 H400 V110 H490 V124 H620"/>
+  <path class="l2" d="M50 30 H85 V58 H150 V88 H220 V118 H290 V144 H370 V170 H450 V190 H620"/>
+  <path class="l3" d="M50 30 H68 V76 H115 V120 H170 V160 H230 V192 H300 V214 H390 V230 H620"/>
+  <path class="tick" d="M135 40 V52 M360 86 V98 M260 112 V124 M345 208 V220"/>
+  <text x="54" y="14">S(t | x)</text>
+  <text x="620" y="272" text-anchor="end">time t</text>
+  <text x="44" y="34" text-anchor="end">1</text>
+  <text x="44" y="254" text-anchor="end">0</text>
+  <g class="key">
+    <path class="l1" d="M470 40 H494"/><text x="502" y="44">low risk</text>
+    <path class="l2" d="M470 58 H494"/><text x="502" y="62">medium risk</text>
+    <path class="l3" d="M470 76 H494"/><text x="502" y="80">high risk</text>
+    <path class="ref" d="M470 94 H494"/><text x="502" y="98">population KM</text>
+  </g>
+</svg>
+<figcaption>Schematic: KMNet predicts a full survival curve per subject. Ticks mark censored observations.</figcaption>
+</figure>
 
-:::{grid-item-card} Quickstart
-:link: quickstart
-:link-type: doc
+## Citation
 
-Simulate, discretise, train and plot, end to end.
-:::
-
-:::{grid-item-card} The method
-:link: method
-:link-type: doc
-
-The model, the likelihood and both rank losses.
-:::
-
-:::{grid-item-card} Configuring the loss
-:link: configuration
-:link-type: doc
-
-`base`, `alpha`, `sigma`, `rank_mode` and the rest.
-:::
-
-:::{grid-item-card} Tutorial notebook
-:link: examples/KMNet_Demo
-:link-type: doc
-
-Training curves, survival plots, C-index and IBS.
-:::
-
-::::
-
-## Citing KMNet
-
-KMNet accompanies a paper under review at TMLR; see {doc}`citation` for the BibTeX entry.
-KMNet is released under the MIT License.
+<div class="km-cite">
+<p>Deep Discrete-Time Survival Analysis with Guaranteed Monotonicity.</p>
+<p class="km-cite-meta">Anonymous · Submitted to Transactions on Machine Learning Research, 2026 · under review ·
+<a href="https://openreview.net/forum?id=VXIk9iY10Q">OpenReview</a> · BibTeX on the <a href="citation.html">citation page</a></p>
+</div>
 
 ```{toctree}
 :hidden:

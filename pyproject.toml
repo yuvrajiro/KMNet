@@ -48,7 +48,7 @@ Changelog = "https://kmnet.statml.in/changelog.html"
 dev = ["pytest>=7", "pytest-cov"]
 docs = [
     "sphinx>=7.2",
-    "pydata-sphinx-theme>=0.15",
+    "furo>=2024.8.6",
     "myst-nb>=1.0",
     "sphinx-design>=0.5",
     "sphinx-copybutton>=0.5",
