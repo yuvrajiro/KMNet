@@ -42,5 +42,28 @@ class TestKMNet(unittest.TestCase):
         self.assertEqual(pred.shape, (self.batch_size, self.time_bins))
         print("Model prediction shape check passed.")
 
+    def test_fit_and_predict_surv(self):
+        rng = np.random.default_rng(0)
+        n = 200
+        X = rng.standard_normal((n, self.input_dim)).astype('float32')
+        time = rng.exponential(10, n).astype('float32')
+        event = (rng.random(n) < 0.7).astype('float32')
+
+        labtrans = KMNet.label_transform(self.time_bins)
+        y = labtrans.fit_transform(time, event)
+        net = torch.nn.Linear(self.input_dim, labtrans.out_features)
+
+        for kwargs in ({}, {'rank_mode': 'conditional', 'sigma': 'auto', 'base': 'bce'}):
+            model = KMNet(net, duration_index=labtrans.cuts, **kwargs)
+            log = model.fit(X, y, batch_size=32, epochs=2, verbose=False)
+            self.assertTrue(np.isfinite(log.to_pandas()['train_loss']).all())
+
+        surv = model.predict_surv_df(X[:4])
+        self.assertEqual(surv.shape, (labtrans.out_features, 4))
+        self.assertTrue(((surv.values >= 0) & (surv.values <= 1)).all())
+        # survival curves are non-increasing in time
+        self.assertTrue((np.diff(surv.values, axis=0) <= 1e-7).all())
+
+
 if __name__ == '__main__':
     unittest.main()

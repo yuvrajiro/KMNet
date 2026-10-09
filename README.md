@@ -1,23 +1,29 @@
 # KMNet: Discrete-Time Survival Analysis with Deep Learning
 
-![KMNet Banner](assets/kmnet_banner.svg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/yuvrajiro/KMNet/main/docs/_static/kmnet_banner.svg" alt="KMNet" width="100%">
+</p>
 
 <p align="center">
   <strong>⚡ State-of-the-art survival analysis with deep learning and ranking losses ⚡</strong>
 </p>
 
 <p align="center">
+  <a href="https://yuvrajiro.github.io/KMNet/"><b>Documentation</b></a> •
   <a href="#-key-features">Features</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-quick-start">Quick Start</a> •
-  <a href="examples/KMNet_Demo.ipynb">Demo Notebook</a> •
+  <a href="https://github.com/yuvrajiro/KMNet/blob/main/examples/KMNet_Demo.ipynb">Demo Notebook</a> •
   <a href="#-citation">Citation</a>
 </p>
 
 <!-- CI/CD & Coverage -->
 <p align="center">
-  <a href="https://github.com/yuvrajiro/KMNet/actions/workflows/test.yml">
-    <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/test.yml/badge.svg" alt="Tests">
+  <a href="https://github.com/yuvrajiro/KMNet/actions/workflows/tests.yml">
+    <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/tests.yml/badge.svg" alt="Tests">
+  </a>
+  <a href="https://yuvrajiro.github.io/KMNet/">
+    <img src="https://github.com/yuvrajiro/KMNet/actions/workflows/docs.yml/badge.svg" alt="Docs">
   </a>
   <a href="https://codecov.io/gh/yuvrajiro/KMNet">
     <img src="https://codecov.io/gh/yuvrajiro/KMNet/branch/main/graph/badge.svg" alt="Coverage">
@@ -118,17 +124,21 @@ This library provides a high-performance implementation using **PyTorch JIT** to
 
 ## 📦 Installation
 
-You can install KMNet directly from the source:
+```bash
+pip install kmnet
+```
+
+Or install the latest development version from source:
 
 ```bash
 git clone https://github.com/yuvrajiro/KMNet.git
 cd KMNet
-pip install .
+pip install -e ".[dev]"
 ```
 
 ### Requirements
 
-*   Python >= 3.7
+*   Python >= 3.8
 *   PyTorch >= 1.7.0
 *   NumPy, Pandas
 *   torchtuples
@@ -137,7 +147,7 @@ pip install .
 
 ## ⚡ Quick Start
 
-Here is a complete example of how to use KMNet on a synthetic dataset. You can also check out the [interactive demo notebook](examples/KMNet_Demo.ipynb).
+Here is a complete example of how to use KMNet on a synthetic dataset. You can also check out the [interactive demo notebook](https://github.com/yuvrajiro/KMNet/blob/main/examples/KMNet_Demo.ipynb) and the [full documentation](https://yuvrajiro.github.io/KMNet/).
 
 ### 1. Data Preparation
 
@@ -321,7 +331,7 @@ model = KMNet(net, loss=loss, duration_index=labtrans.cuts)
 
 ## 💬 Getting Help
 
-- 📖 **Documentation**: Check out our [examples](examples/) and [API docs](docs/)
+- 📖 **Documentation**: [yuvrajiro.github.io/KMNet](https://yuvrajiro.github.io/KMNet/) (quickstart, method, API reference)
 - 💡 **Issues**: Found a bug? [Open an issue](https://github.com/yuvrajiro/KMNet/issues)
 - 💬 **Discussions**: Have questions? Start a [discussion](https://github.com/yuvrajiro/KMNet/discussions)
 - 📧 **Email**: For collaboration inquiries: yuvrajiro@gmail.com
@@ -349,19 +359,18 @@ We welcome contributions! KMNet is an open-source research project.
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [`LICENSE`](https://github.com/yuvrajiro/KMNet/blob/main/LICENSE) for more information.
 
 ## 📚 Citation (Under Consideration)
 
-**If you use KMNet in your research, please cite:**
+**The paper is under review. Until it is published, please cite the software:**
 
 ```bibtex
-@article{YourLastName2025KMNet,
-  title={KMNet: Optimizing Discrete-Time Survival Analysis with Rank-Based Loss},
-  author={YourLastName, Yuvraj},
-  journal={Journal Name (Under Review)},
-  year={2025},
-  url={https://github.com/yuvrajiro/KMNet}
+@software{goswami_kmnet,
+  title  = {KMNet: Discrete-Time Survival Analysis with a Kaplan-Meier Inspired Rank Loss},
+  author = {Goswami, Rahul},
+  url    = {https://github.com/yuvrajiro/KMNet},
+  year   = {2025}
 }
 ```
 

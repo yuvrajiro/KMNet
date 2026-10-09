@@ -77,6 +77,12 @@ def _pair_rank_mat(mat, idx_durations, events, dtype='float32'):
     return mat
 
 class KMNetDataset(tt.data.DatasetTuple):
+    """Dataset that attaches the comparable-pairs matrix to every mini-batch.
+
+    Each item is ``(input, (idx_durations, events, rank_mat))`` where
+    ``rank_mat`` is built by :func:`pair_rank_mat` for that batch.
+    """
+
     def __getitem__(self, index):
         input, target =  super().__getitem__(index)
         target = target.to_numpy()
@@ -292,6 +298,32 @@ class _KMLoss(_Loss):
 
 
 class KMLoss(_KMLoss):
+    """Combined KMNet loss: censored likelihood plus Kaplan-Meier inspired rank loss.
+
+    ``loss = alpha * base_loss + (1 - alpha) * rank_weight * rank_loss``
+
+    Parameters
+    ----------
+    alpha : float, default 0.5
+        Weight on the likelihood term, in ``[0, 1]``.
+    sigma : float or 'auto', default 0.1
+        Softness of the pairwise ranking penalty. ``'auto'`` uses
+        ``max(0.25 * std(phi[i, j_i]), 1e-3)`` for each batch.
+    reduction : {'mean', 'sum', 'none'}, default 'mean'
+        How per-sample losses are reduced.
+    base : {'nll', 'bce'}, default 'nll'
+        Likelihood form: negative log-likelihood or masked binary cross-entropy.
+    rank_mode : {'full', 'conditional'}, default 'full'
+        ``'full'`` compares CDFs at the earlier event time; ``'conditional'``
+        compares the conditional survival scores in that bin.
+    rank_space : {'logit', 'prob'}, default 'logit'
+        Score space used when ``rank_mode='conditional'``.
+    rank_penalty : {'softplus', 'exp'}, default 'softplus'
+        Shape of the ranking penalty.
+    rank_weight : float, default 1.0
+        Extra multiplier on the rank loss to balance the two scales.
+    """
+
     def __init__(
         self,
         alpha: float = 0.5,
@@ -345,8 +377,37 @@ class KMLoss(_KMLoss):
         return self.alpha * base_loss + (1.0 - self.alpha) * (self.rank_weight * rloss)
 
 class KMNet(SurvBase):
-    """
-    Optimized version of KMNet using JIT-compiled loss functions.
+    """Discrete-time survival model trained with :class:`KMLoss`.
+
+    The network outputs one logit ``phi_t`` per time bin; the conditional
+    survival of bin ``t`` is ``sigmoid(phi_t)`` and the survival curve is
+    their cumulative product. Training, callbacks and prediction follow the
+    ``torchtuples.Model`` API.
+
+    Parameters
+    ----------
+    net : torch.nn.Module
+        Any network whose output width equals the number of time bins
+        (``labtrans.out_features``).
+    optimizer : torchtuples optimizer or torch.optim.Optimizer, optional
+        Defaults to Adam.
+    device : str or torch.device, optional
+        e.g. ``'cuda'``. Defaults to CUDA if available, otherwise CPU.
+    duration_index : array-like, optional
+        Time grid of the bins (``labtrans.cuts``); used as the index of
+        :meth:`predict_surv_df`.
+    alpha, sigma, base, rank_mode, rank_space, rank_penalty, rank_weight
+        Passed to :class:`KMLoss` when ``loss`` is not given.
+    loss : KMLoss, optional
+        A pre-built loss; overrides the loss arguments above.
+
+    Examples
+    --------
+    >>> labtrans = KMNet.label_transform(20)
+    >>> y = labtrans.fit_transform(time, event)
+    >>> model = KMNet(net, duration_index=labtrans.cuts)
+    >>> model.fit(X, y, batch_size=64, epochs=20)
+    >>> surv = model.predict_surv_df(X_test)
     """
     def __init__(
         self,
@@ -386,15 +447,21 @@ class KMNet(SurvBase):
         return dataloader
 
     def predict_surv_df(self, input, batch_size=8224, eval_=True, num_workers=0, is_dataloader=None):
+        """Predict survival curves as a DataFrame (rows: time grid, columns: subjects)."""
         surv = self.predict_surv(input, batch_size, True, eval_, True, num_workers, is_dataloader)
         return pd.DataFrame(surv.transpose(), self.duration_index)
 
     def predict_surv(self, input, batch_size=8224, numpy=None, eval_=True, to_cpu=False,
                      num_workers=0, is_dataloader=None):
+        """Predict survival curves ``S(t | x)`` as an array of shape ``(n, T)``."""
         return np.cumprod(self.predict(input, batch_size, numpy, eval_, False, to_cpu, num_workers,
                             is_dataloader, torch.sigmoid), axis=1)
 
     def interpolate(self, sub=10, scheme='const_pdf', duration_index=None):
+        """Wrap the model in pycox's ``InterpolateDiscrete`` for smoother curves.
+
+        ``sub`` is the number of sub-steps inserted between consecutive bins.
+        """
         if duration_index is None:
             duration_index = self.duration_index
         return models.interpolation.InterpolateDiscrete(self, scheme, duration_index, sub)

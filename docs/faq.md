@@ -1,4 +1,4 @@
-# Frequently Asked Questions (FAQ)
+# FAQ
 
 ## General Questions
 
@@ -70,7 +70,7 @@ model = KMNet(net, device='cuda')
 ## Research & Citation
 
 ### How do I cite KMNet?
-See the [README](../README.md#-citation) for BibTeX citation.
+See {doc}`citation`.
 
 ### Where can I find the paper?
 The paper is currently under review. Check the GitHub repository for updates.

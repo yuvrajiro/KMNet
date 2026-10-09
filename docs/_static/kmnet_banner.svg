@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-labelledby="t d">
+  <title id="t">KMNet</title>
+  <desc id="d">Three Kaplan-Meier survival curves drawing themselves next to the KMNet wordmark.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A1020"/>
+      <stop offset="0.55" stop-color="#0F1A33"/>
+      <stop offset="1" stop-color="#151335"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.78" cy="0.25" r="0.55">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.12" cy="0.95" r="0.6">
+      <stop offset="0" stop-color="#818CF8" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#818CF8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5EEAD4"/>
+      <stop offset="0.5" stop-color="#A5B4FC"/>
+      <stop offset="1" stop-color="#FDA4AF"/>
+    </linearGradient>
+    <linearGradient id="areaA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#94A3B8" fill-opacity="0.13"/>
+    </pattern>
+    <filter id="soft" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .curve { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
+             stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.6s cubic-bezier(.65,.05,.25,1) forwards; }
+    .c2 { animation-delay: .35s; }
+    .c3 { animation-delay: .7s; }
+    .tick { stroke-width: 2.4; stroke-linecap: round; opacity: 0; animation: pop .4s ease-out forwards; }
+    .area { opacity: 0; animation: fade 1.6s ease-out 1.8s forwards; }
+    .rise { opacity: 0; transform: translateY(14px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+    .r2 { animation-delay: .15s; } .r3 { animation-delay: .3s; } .r4 { animation-delay: .45s; }
+    .pulse { animation: pulse 3.2s ease-in-out 3s infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes pop  { from { opacity: 0; } to { opacity: .95; } }
+    @keyframes fade { to { opacity: 1; } }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @keyframes pulse { 0%,100% { opacity: .9; } 50% { opacity: .35; } }
+    @media (prefers-reduced-motion: reduce) {
+      .curve, .tick, .area, .rise, .pulse { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
+    }
+  </style>
+
+  <rect width="1200" height="400" rx="22" fill="url(#bg)"/>
+  <rect width="1200" height="400" rx="22" fill="url(#dots)"/>
+  <rect width="1200" height="400" rx="22" fill="url(#glowA)"/>
+  <rect width="1200" height="400" rx="22" fill="url(#glowB)"/>
+
+  <!-- wordmark -->
+  <g font-family="'Segoe UI', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text class="rise" x="70" y="118" fill="#5EEAD4" font-size="15" font-weight="600" letter-spacing="4">SURVIVAL ANALYSIS · PYTORCH</text>
+    <text class="rise r2" x="66" y="206" fill="url(#word)" font-size="104" font-weight="800" letter-spacing="-3">KMNet</text>
+    <text class="rise r3" x="70" y="250" fill="#CBD5E1" font-size="21">Deep discrete-time survival models trained</text>
+    <text class="rise r3" x="70" y="278" fill="#CBD5E1" font-size="21">with a Kaplan–Meier inspired rank loss.</text>
+    <g class="rise r4">
+      <rect x="70" y="306" width="372" height="40" rx="20" fill="#0B1222" stroke="#334155"/>
+      <text x="92" y="332" fill="#E2E8F0" font-size="17" font-family="'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace">ℒ = α·ℒ<tspan font-size="12" dy="4">NLL</tspan><tspan dy="-4"> + (1−α)·λ·ℒ</tspan><tspan font-size="12" dy="4">rank</tspan></text>
+    </g>
+  </g>
+
+  <!-- axes -->
+  <g stroke="#475569" stroke-width="1.5" fill="none">
+    <path d="M560 62 V330 H1150"/>
+  </g>
+  <g stroke="#334155" stroke-width="1" stroke-dasharray="3 6">
+    <path d="M560 70 H1150 M560 135 H1150 M560 200 H1150 M560 265 H1150"/>
+  </g>
+  <g fill="#94A3B8" font-family="'Cascadia Code', Menlo, Consolas, monospace" font-size="14">
+    <text x="568" y="56">S(t | x)</text>
+    <text x="1140" y="352" text-anchor="end">time t →</text>
+    <text x="545" y="75" text-anchor="end">1</text>
+    <text x="545" y="335" text-anchor="end">0</text>
+  </g>
+
+  <!-- area under the low-risk curve -->
+  <path class="area" d="M560 70 H600 V85 H660 V98 H720 V115 H800 V128 H880 V150 H960 V165 H1040 V180 H1140 V330 H560 Z" fill="url(#areaA)"/>
+
+  <!-- Kaplan-Meier step curves -->
+  <path class="curve" pathLength="1" stroke="#2DD4BF" filter="url(#soft)"
+        d="M560 70 H600 V85 H660 V98 H720 V115 H800 V128 H880 V150 H960 V165 H1040 V180 H1140"/>
+  <path class="curve c2" pathLength="1" stroke="#818CF8" filter="url(#soft)"
+        d="M560 70 H590 V95 H640 V122 H700 V150 H760 V178 H830 V205 H900 V228 H980 V250 H1140"/>
+  <path class="curve c3" pathLength="1" stroke="#FB7185" filter="url(#soft)"
+        d="M560 70 H575 V110 H615 V150 H660 V190 H710 V225 H770 V255 H840 V280 H920 V298 H1140"/>
+
+  <!-- censoring marks -->
+  <g class="tick-group">
+    <path class="tick" stroke="#2DD4BF" d="M630 78 V92" style="animation-delay:1.3s"/>
+    <path class="tick" stroke="#2DD4BF" d="M750 108 V122" style="animation-delay:1.6s"/>
+    <path class="tick" stroke="#2DD4BF" d="M1000 158 V172" style="animation-delay:2.2s"/>
+    <path class="tick" stroke="#2DD4BF" d="M1100 173 V187" style="animation-delay:2.5s"/>
+    <path class="tick" stroke="#818CF8" d="M615 88 V102" style="animation-delay:1.5s"/>
+    <path class="tick" stroke="#818CF8" d="M730 143 V157" style="animation-delay:1.9s"/>
+    <path class="tick" stroke="#818CF8" d="M940 221 V235" style="animation-delay:2.4s"/>
+    <path class="tick" stroke="#818CF8" d="M1060 243 V257" style="animation-delay:2.7s"/>
+    <path class="tick" stroke="#FB7185" d="M690 183 V197" style="animation-delay:1.9s"/>
+    <path class="tick" stroke="#FB7185" d="M800 248 V262" style="animation-delay:2.3s"/>
+    <path class="tick" stroke="#FB7185" d="M1000 291 V305" style="animation-delay:2.8s"/>
+  </g>
+
+  <!-- legend -->
+  <g font-family="'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#CBD5E1" class="rise r4">
+    <circle cx="1000" cy="98" r="5" fill="#2DD4BF"/><text x="1012" y="102">low risk</text>
+    <circle cx="1000" cy="120" r="5" fill="#818CF8"/><text x="1012" y="124">medium risk</text>
+    <circle cx="1000" cy="142" r="5" fill="#FB7185" class="pulse"/><text x="1012" y="146">high risk</text>
+  </g>
+</svg>
