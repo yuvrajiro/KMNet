@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kmnet"
+dynamic = ["version"]
+description = "Deep discrete-time survival analysis with a Kaplan-Meier inspired rank loss (PyTorch)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Rahul Goswami" }]
+maintainers = [{ name = "Rahul Goswami", email = "rahul@statml.in" }]
+keywords = [
+    "survival analysis", "time-to-event", "discrete-time", "kaplan-meier",
+    "rank loss", "deep learning", "pytorch", "censoring",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "torch>=1.7.0",
+    "numpy",
+    "pandas",
+    "torchtuples",
+    "pycox",
+    "numba",
+]
+
+[project.urls]
+Homepage = "https://github.com/yuvrajiro/KMNet"
+Documentation = "https://kmnet.statml.in/"
+Repository = "https://github.com/yuvrajiro/KMNet"
+Issues = "https://github.com/yuvrajiro/KMNet/issues"
+Changelog = "https://kmnet.statml.in/changelog.html"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-cov"]
+docs = [
+    "sphinx>=7.2",
+    "furo>=2024.8.6",
+    "myst-nb>=1.0",
+    "sphinx-design>=0.5",
+    "sphinx-copybutton>=0.5",
+    "matplotlib>=3.6",
+    "ipykernel>=6",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "kmnet.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]

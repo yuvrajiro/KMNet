@@ -1,0 +1,8 @@
+# Documentation build dependencies (the package itself is installed separately: pip install -e .)
+sphinx>=7.2
+furo>=2024.8.6
+myst-nb>=1.0
+sphinx-design>=0.5
+sphinx-copybutton>=0.5
+matplotlib>=3.6
+ipykernel>=6

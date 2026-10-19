@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="t d">
+  <title id="t">KMNet</title>
+  <desc id="d">KMNet wordmark beside three Kaplan-Meier survival curves.</desc>
+  <rect x="0.5" y="0.5" width="1199" height="359" rx="12" fill="#FFFFFF" stroke="#E6E8EC"/>
+  <g font-family="'IBM Plex Sans', 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="72" y="128" fill="#5B616E" font-size="15" letter-spacing="1" font-family="'IBM Plex Mono', Menlo, Consolas, monospace">DISCRETE-TIME SURVIVAL ANALYSIS · PYTORCH</text>
+    <text x="68" y="206" fill="#16181D" font-size="84" font-weight="600" letter-spacing="-2">KMNet</text>
+    <text x="72" y="252" fill="#3E434D" font-size="22">Censored likelihood + Kaplan–Meier inspired rank loss</text>
+  </g>
+  <g fill="none" stroke-linejoin="round">
+    <path d="M640 50 V300 H1130" stroke="#C9CDD4" stroke-width="1.5"/>
+    <path d="M640 62 H690 V84 H760 V102 H830 V124 H910 V144 H990 V170 H1070 V186 H1130" stroke="#9AA0AA" stroke-width="2.5"/>
+    <path d="M640 62 H675 V98 H735 V136 H805 V174 H875 V206 H955 V236 H1035 V258 H1130" stroke="#9AA0AA" stroke-width="2.5"/>
+    <path d="M640 62 H660 V120 H705 V176 H755 V224 H815 V262 H885 V284 H1130" stroke="#1F6F78" stroke-width="3"/>
+    <path d="M730 78 V90 M950 138 V150 M855 168 V180 M920 278 V290" stroke="#16181D" stroke-width="2"/>
+  </g>
+  <g fill="#5B616E" font-family="'IBM Plex Mono', Menlo, Consolas, monospace" font-size="14">
+    <text x="648" y="42">S(t | x)</text>
+    <text x="1130" y="324" text-anchor="end">time t</text>
+  </g>
+</svg>
